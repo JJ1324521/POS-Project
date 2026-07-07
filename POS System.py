@@ -1,71 +1,90 @@
-#Point of Sale (POS) System
-#This program runs on the command line (CMD)
-#It stores items in a list, allows adding/removing, and displays totals.
+# Point of Sale (POS) System
+# This program runs on the command line (CMD)
+# It stores items in a list, allows adding/removing, and displays totals.
 
-#This allows you to add the product with the price to your cart
-def add_product(products):
-    name = input("Enter product name: ").lower()
-
-    if name == "kaas":
-        price = 50
-    elif name == "melk":
-        price = 30
-    elif name == "brood":
-        price = 15
-    else:
-        print("Invalid choice, try again.")
-        return
-
-    #This appends the name with price together
-    products.append((name.capitalize(), price))
-    print(f"{name.capitalize()} added successfully at R{price}")
-
-#This removes products from cart
-def remove_product(products):
-    name = input("Enter product name: ")
+# Function to add a product from the product list into the cart
+def add_product(products, cart):
+    product_found = False
+    name = input("Enter product name: ").lower() # Ask user for product name
     for product in products:
         if product[0].lower() == name.lower():
-            products.remove(product)
-            print(f"Product {name.capitalize()} removed.")
-            return
-    print("Product not found.")
-""
+            cart.append((product[0].capitalize(), product[1])) # Add product to cart
+            print(f"{product[0].capitalize()} added successfully at R{product[1]}")
+            product_found = True
+    if not(product_found): # If no product matched
+        print("Invalid choice, try again.")
+    return
 
-#This displays the products in your cart
-def display_products(products):
-    if products:  # Check if the list is not empty
+# Function to remove a product from the cart
+def remove_product(cart):
+    product_found = False
+    name = input("Enter product name: ") # Ask user which product to remove
+
+    for product in cart:  # Loop through items in the cart
+        if product[0].lower() == name.lower():
+            cart.remove(product) # Remove the first matching product
+            print(f"Product {name.capitalize()} removed.")
+            product_found = True
+            break
+
+    if not(product_found): # If product not found in cart
+        print("Product not found in cart.")
+    return
+
+
+
+
+# Function to display all items in the cart and calculate total
+def display_cart(cart):
+    if cart:  # Check if the list is not empty
         total = 0
-        for name, price in products:
-            print(f"{name.capitalize()} : R{price:.2f}")
-            total += price
+        for item in cart:
+            print(f"{item[0].capitalize()} : R{item[1]:.2f}")
+            total += item[1]
         print(f"Total price: R{total}")
     else:
-        print("Cart empty")
+        print("Cart empty") # If no items in cart
+    return
 
+# Function to display all available products
+def display_products(products):
+    for product in products: # Loop through product list
+        print(f"{product[0]}: R{product[1]:.2f}")
+    return
 
-    # Main function with loop
-
+# Main function with loop
 def main():
-    products = []
-    while True:
+    # Predefined list of products (name + price)
+    products = [
+        ["Brood", 15.99],
+        ["Melk", 23.50],
+        ["Kaas", 9.99]
+    ]
+
+    cart = []  # Empty shopping cart
+
+    while True:  # Infinite loop until user chooses to exit
         print("Choose an option:")
         print("1 - Add product")
         print("2 - Remove product")
-        print("3 - Show products")
-        print("4 - Exit")
+        print("3 - Show cart")
+        print("4 - Display products")
+        print("5 - Exit")
         choice = input("Your choice: ")
 
         if choice == "1":
-            add_product(products)
+            add_product(products, cart)  # Add product to cart
         elif choice == "2":
-            remove_product(products)
+            remove_product(cart) # Remove product from cart
         elif choice == "3":
-            display_products(products)
+            display_cart(cart)  # Show cart contents
         elif choice == "4":
-            print("Program ended.")
+            display_products(products)  # Show available products
+        elif choice == "5":
+            print("Program ended.")  # Exit program
             break
         else:
-            print("Invalid choice, try again.\n")
+            print("Invalid choice, try again.\n")  # Handle invalid input
 
 
     # Run the program
