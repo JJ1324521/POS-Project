@@ -13,7 +13,7 @@ def add_product(products, cart):
             print(f"{product[0].capitalize()} added successfully at R{product[1]}")
             product_found = True
     # If no product matched
-    if not(product_found): 
+    if not(product_found):
         print("Invalid choice, try again.")
     return
 
@@ -24,10 +24,10 @@ def remove_product(cart):
     name = input("Enter product name: ")
 
     # Loop through items in the cart
-    for product in cart: 
+    for product in cart:
         if product[0].lower() == name.lower():
             # Remove the first matching product
-            cart.remove(product) 
+            cart.remove(product)
             print(f"Product {name.capitalize()} removed.")
             product_found = True
             break
@@ -39,7 +39,7 @@ def remove_product(cart):
 # Function to display all items in the cart and calculate total
 def display_cart(cart):
     # Check if the list is not empty
-    if cart:  
+    if cart:
         total = 0
         #Loop through each item in the cart
         for item in cart:
@@ -48,13 +48,13 @@ def display_cart(cart):
         print(f"Total price: R{total}")
     else:
         # If no items in cart
-        print("Cart empty") 
+        print("Cart empty")
     return
 
 # Function to display all available products
 def display_products(products):
     # Loop through product list
-    for product in products: 
+    for product in products:
         print(f"{product[0]}: R{product[1]:.2f}")
     return
 
@@ -67,33 +67,37 @@ def main():
         ["Kaas", 9.99]
     ]
     # Empty shopping cart
-    cart = [] 
+    cart = []
 
     # Infinite loop until user chooses to exit
-    while True: 
+    while True:
         print("Choose an option:")
         print("1 - Add product")
         print("2 - Remove product")
         print("3 - Show cart")
         print("4 - Display products")
-        print("5 - Exit")
+        print("5 - Clear entire cart")
+        print("6 - Exit")
         choice = input("Your choice: ")
 
         # Run operations
         if choice == "1":
-            add_product(products, cart) 
+            add_product(products, cart)
         elif choice == "2":
-            remove_product(cart) 
+            remove_product(cart)
         elif choice == "3":
-            display_cart(cart) 
+            display_cart(cart)
         elif choice == "4":
-            display_products(products)  
+            display_products(products)
         elif choice == "5":
-            print("Program ended.")  
-            break
+            cart.clear()
+            print("Cart Cleared\n")
+        elif choice == "6":
+            print("Program ended.")
+            return
         else:
             # Handle invalid input
-            print("Invalid choice, try again.\n")  
+            print("Invalid choice, try again.\n")
 
 # Run the program
 if __name__ == "__main__":
